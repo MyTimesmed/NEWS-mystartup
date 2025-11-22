@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { Play } from "lucide-react";
 
 type Video = {
   videoDetail_id?: number;
@@ -20,9 +21,21 @@ interface VideosClientProps {
 
 export default function VideosClient({ videos }: VideosClientProps) {
   const [showOverlay, setShowOverlay] = useState<Record<string, boolean>>({});
+  const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
 
   const handleOverlayClick = (key: string) => {
     setShowOverlay((prev) => ({ ...prev, [key]: false }));
+  };
+
+  const getEmbedUrl = (url: string) => {
+    if (url.includes('youtube.com/watch?v=')) {
+      const videoId = url.split('v=')[1].split('&')[0];
+      return `https://www.youtube.com/embed/${videoId}`;
+    } else if (url.includes('youtu.be/')) {
+      const videoId = url.split('youtu.be/')[1].split('?')[0];
+      return `https://www.youtube.com/embed/${videoId}`;
+    }
+    return url; // fallback
   };
 
   return (
@@ -54,27 +67,32 @@ export default function VideosClient({ videos }: VideosClientProps) {
                     {v.fileName && (
                       <div className="aspect-video">
                         <iframe
-                          src={v.fileName}
+                          src={getEmbedUrl(v.fileName)}
                           title={v.videoTitle}
                           className="w-full h-full"
                           frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
                         />
                       </div>
                     )}
 
-                    {overlayVisible && v.image && (
+                    {overlayVisible && v.image && !imageErrors[key] && (
                       <div
                         className="absolute inset-0 cursor-pointer"
                         onClick={() => handleOverlayClick(key)}
                       >
                         <Image
-                          src={v.image}
+                          src={v.image.startsWith('http') ? v.image : `https://newssiteimages.timesmed.com${v.image}`}
                           alt={v.videoTitle ?? "video thumbnail"}
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           className="object-cover"
+                          onError={() => setImageErrors(prev => ({ ...prev, [key]: true }))}
                         />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <Play className="w-16 h-16 text-white drop-shadow-lg" />
+                        </div>
                       </div>
                     )}
                   </div>

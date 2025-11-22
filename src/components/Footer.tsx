@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center items-center">
           <p className="text-gray-300 text-sm">
-            © {currentYear} MyStartup News. All rights reserved.
+            © {currentYear} Sparkwaves News. All rights reserved.
           </p>
         </div>
       </div>

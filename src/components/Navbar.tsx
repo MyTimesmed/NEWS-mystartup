@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import useSWR from "swr";
 import { cn } from "@/lib/utils";
@@ -26,14 +25,7 @@ export default function Navbar() {
         <div className="flex justify-between md:grid md:grid-cols-3 items-center py-4">
           <div className="justify-self-start">
             <Link href="/" className="flex items-center">
-              <Image
-                src="/logo.png"
-                alt="News Logo"
-                width={250}
-                height={60}
-                className="h-auto"
-                priority
-              />
+              <span className="text-white text-xl font-bold">Sparkwaves</span>
             </Link>
           </div>
 

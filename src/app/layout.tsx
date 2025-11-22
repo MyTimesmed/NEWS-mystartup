@@ -4,12 +4,12 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "MyStartup News - Latest News & Updates",
+  title: "Sparkwaves News - Latest News & Updates",
   description:
     "Your trusted source for the latest news across business, technology, sports, and world events.",
   keywords:
     "news, business, technology, sports, world, economy, politics, general",
-  authors: [{ name: "MyStartup News Team" }],
+  authors: [{ name: "Sparkwaves News Team" }],
   icons: {
     icon: "/logo.png",
   },
